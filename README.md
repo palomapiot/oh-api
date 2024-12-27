@@ -73,45 +73,7 @@ The API provides the following endpoints:
 ```json
 {
     "id": "unique_identifier",
-    "hate_speech": {
-        "is_hate_speech": true,
-        "explanation": [
-            {
-                "input": "input query phrase 1",
-                "explanation": "input query 1 phrase step-by-step explanation"
-            },
-            {
-                "input": "input query phrase 2",
-                "explanation": "input query 2 phrase step-by-step explanation"
-            }
-        ]
-    },
-    "fake_news": {
-        "is_fake_news": false,
-        "explanation": [
-            {
-                "input": "input query phrase 1",
-                "explanation": "input query 1 phrase step-by-step explanation"
-            },
-            {
-                "input": "input query phrase 2",
-                "explanation": "input query 2 phrase step-by-step explanation"
-            }
-        ]
-    },
-    "hyperpartisan": {
-        "is_hyperpartisan": false,
-        "explanation": [
-            {
-                "input": "input query phrase 1",
-                "explanation": "input query 1 phrase step-by-step explanation"
-            },
-            {
-                "input": "input query phrase 2",
-                "explanation": "input query 2 phrase step-by-step explanation"
-            }
-        ]
-    }
+    "text": "response"
 }
 ```
 
