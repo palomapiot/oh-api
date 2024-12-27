@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 RUN pip install --no-cache-dir "unsloth[cu121-ampere-torch240] @ git+https://github.com/unslothai/unsloth.git"
 
 
-COPY oh-api/oh_api.py /app/oh_api.py
+COPY oh_api.py /app/oh_api.py
 
 EXPOSE 8000
 
