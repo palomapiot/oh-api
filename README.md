@@ -27,7 +27,7 @@ classification, as well as it qualifies as fake news or hyperpartisan content.
 1. Clone the repository or download the application files.
 
 ```bash
-git clone https://github.com/palomapiot/oh-api
+git clone git@github.com:palomapiot/oh-api.git
 cd oh-api
 ```
 
