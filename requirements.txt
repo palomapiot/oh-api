@@ -5,4 +5,4 @@ transformers
 bitsandbytes
 json-repair
 pydantic
-torch==2.5.0+cpu
+torch
