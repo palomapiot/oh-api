@@ -1,5 +1,5 @@
 import json_repair
-import os, asyncio
+import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from unsloth import FastLanguageModel
@@ -16,13 +16,13 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     token=hf_token
 )
 
-distil = FastLanguageModel.from_pretrained(
-    model_name="irlab-udc/Llama-3-8B-Distil-MetaHate",
-    max_seq_length=4096,
-    dtype=None,
-    load_in_4bit=True,
-    token=hf_token
-)
+#distil = FastLanguageModel.from_pretrained(
+#    model_name="irlab-udc/Llama-3-8B-Distil-MetaHate",
+#    max_seq_length=4096,
+#    dtype=None,
+#    load_in_4bit=True,
+#    token=hf_token
+#)
 
 tokenizer = get_chat_template(
     tokenizer,
@@ -31,7 +31,7 @@ tokenizer = get_chat_template(
 )
 
 FastLanguageModel.for_inference(model)
-FastLanguageModel.for_inference(distil)
+#FastLanguageModel.for_inference(distil)
 
 hs_instruction = """
 You must explain why a social media message is hate or not and then tell me your decision. You must always reply with only a JSON containing one field 'hate_speech' including a Boolean value ("True" for hate speech messages, "False" for neutral ones); and a field 'explanations' containing a list with the each message phrase and its corresponding explanation. Do not include text outside the JSON.
@@ -143,10 +143,11 @@ def inference(instruction: str, prompt: str, is_distil=False):
         add_generation_prompt=True,
         return_tensors="pt",
     ).to("cuda")
-    if is_distil:
-        outputs = distil.generate(input_ids=inputs, max_new_tokens=2048, use_cache=True)
-    else:
-        outputs = model.generate(input_ids=inputs, max_new_tokens=2048, use_cache=True)
+
+    #if is_distil:
+    #    outputs = distil.generate(input_ids=inputs, max_new_tokens=2048, use_cache=True)
+    #else:
+    outputs = model.generate(input_ids=inputs, max_new_tokens=2048, use_cache=True)
     result = tokenizer.batch_decode(outputs)
     decoded_object = json_repair.repair_json(result[0], return_objects=True)
     return decoded_object[-1]
@@ -211,16 +212,9 @@ async def generate_text(request: PromptRequest):
         raise HTTPException(status_code=400, detail="Prompt is required")
     try:
         # Run inference for all models concurrently in threads
-        hs_task = asyncio.to_thread(inference, hs_instruction, request.prompt, True)
-        hyperpartisan_task = asyncio.to_thread(inference, hyperpartisan_instruction, request.prompt)
-        fake_news_task = asyncio.to_thread(inference, fake_news_instruction, request.prompt)
-
-        # Wait for all tasks to complete
-        hs_response, hyperpartisan_response, fake_news_response = await asyncio.gather(
-            hs_task, hyperpartisan_task, fake_news_task
-        )
-
-        # Generate unified user messages
+        hs_response = inference(hs_instruction, request.prompt)
+        hyperpartisan_response = inference(hyperpartisan_instruction, request.prompt)
+        fake_news_response = inference(fake_news_instruction, request.prompt)
         response = generate_user_messages(hs_response, fake_news_response, hyperpartisan_response)
 
         return {
