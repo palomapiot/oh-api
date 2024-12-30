@@ -173,29 +173,38 @@ def generate_user_messages(hate_speech_response, fake_news_response, hyperpartis
 
     # Process hate speech response
     if hate_speech_response.get("hate_speech", False):
-        explanation = "; ".join(
-            f"{entry['input']}: {entry['explanation']}"
-            for entry in hate_speech_response.get("explanations", [])
-        )
-        messages.append(f"This content contains hate speech. {explanation}.")
+        if hate_speech_response.get("hate_speech") is True:
+            explanation = "; ".join(
+                f"{entry['input']}: {entry['explanation']}"
+                for entry in hate_speech_response.get("explanations", [])
+            )
+            messages.append(f"This content contains hate speech. {explanation}.")
+        else:
+            messages.append("This content does not contain hate speech.")
 
     # Process fake news response
     if fake_news_response.get("fake_news", False):
-        explanation = "; ".join(
-            f"{key}: {value}"
-            for entry in fake_news_response.get("explanations", [])
-            for key, value in entry.items()
-        )
-        messages.append(f"This content contains fake news. {explanation}.")
+        if hate_speech_response.get("fake_news") is True:
+            explanation = "; ".join(
+                f"{key}: {value}"
+                for entry in fake_news_response.get("explanations", [])
+                for key, value in entry.items()
+            )
+            messages.append(f"This content contains fake news. {explanation}.")
+        else:
+            messages.append("This content does not contain fake news.")
 
     # Process hyperpartisan news response
     if hyperpartisan_response.get("hyperpatisan", False):
-        explanation = "; ".join(
-            f"{key}: {value}"
-            for entry in hyperpartisan_response.get("explanations", [])
-            for key, value in entry.items()
-        )
-        messages.append(f"This content contains hyperpartisan news. {explanation}.")
+        if hate_speech_response.get("hyperpatisan") is True:
+            explanation = "; ".join(
+                f"{key}: {value}"
+                for entry in hyperpartisan_response.get("explanations", [])
+                for key, value in entry.items()
+            )
+            messages.append(f"This content contains hyperpartisan news. {explanation}.")
+        else:
+            messages.append("This content does not contain hyperpartisan news.")
 
     # Add a message if no harms were detected
     if not messages:
