@@ -173,7 +173,7 @@ def generate_user_messages(hate_speech_response, fake_news_response, hyperpartis
 
     # Process hate speech response
     if hate_speech_response.get("hate_speech", False):
-        if hate_speech_response.get("hate_speech") is True:
+        if hate_speech_response.get("hate_speech") == "True":
             explanation = "; ".join(
                 f"{entry['input']}: {entry['explanation']}"
                 for entry in hate_speech_response.get("explanations", [])
@@ -184,7 +184,7 @@ def generate_user_messages(hate_speech_response, fake_news_response, hyperpartis
 
     # Process fake news response
     if fake_news_response.get("fake_news", False):
-        if hate_speech_response.get("fake_news") is True:
+        if hate_speech_response.get("fake_news") == "True":
             explanation = "; ".join(
                 f"{key}: {value}"
                 for entry in fake_news_response.get("explanations", [])
@@ -196,7 +196,7 @@ def generate_user_messages(hate_speech_response, fake_news_response, hyperpartis
 
     # Process hyperpartisan news response
     if hyperpartisan_response.get("hyperpatisan", False):
-        if hate_speech_response.get("hyperpatisan") is True:
+        if hate_speech_response.get("hyperpatisan") == "True":
             explanation = "; ".join(
                 f"{key}: {value}"
                 for entry in hyperpartisan_response.get("explanations", [])
