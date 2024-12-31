@@ -149,7 +149,14 @@ def inference(instruction: str, prompt: str, is_distil=False):
     #    outputs = distil.generate(input_ids=inputs, max_new_tokens=2048, use_cache=True)
     #else:
     print('Generating output')
-    outputs = model.generate(input_ids=inputs, max_new_tokens=2048, use_cache=True)
+    outputs = model.generate(
+        input_ids=inputs,
+        max_new_tokens=2048,
+        use_cache=True,
+        temperature=0.01,
+        top_p=0.1,
+        top_k=5
+    )
     print('Decoding output')
     result = tokenizer.batch_decode(outputs)
     print('Repairing JSON')
@@ -173,7 +180,7 @@ def generate_user_messages(hate_speech_response, fake_news_response, hyperpartis
 
     # Process hate speech response
     if hate_speech_response.get("hate_speech", False):
-        if hate_speech_response.get("hate_speech") == "True":
+        if str(hate_speech_response.get("hate_speech")).lower() == "true":
             explanation = "; ".join(
                 f"{entry['input']}: {entry['explanation']}"
                 for entry in hate_speech_response.get("explanations", [])
@@ -184,7 +191,7 @@ def generate_user_messages(hate_speech_response, fake_news_response, hyperpartis
 
     # Process fake news response
     if fake_news_response.get("fake_news", False):
-        if hate_speech_response.get("fake_news") == "True":
+        if str(fake_news_response.get("fake_news")).lower() == "true":
             explanation = "; ".join(
                 f"{key}: {value}"
                 for entry in fake_news_response.get("explanations", [])
@@ -196,7 +203,7 @@ def generate_user_messages(hate_speech_response, fake_news_response, hyperpartis
 
     # Process hyperpartisan news response
     if hyperpartisan_response.get("hyperpatisan", False):
-        if hate_speech_response.get("hyperpatisan") == "True":
+        if str(hyperpartisan_response.get("hyperpatisan")).lower() == "true":
             explanation = "; ".join(
                 f"{key}: {value}"
                 for entry in hyperpartisan_response.get("explanations", [])
