@@ -42,6 +42,7 @@ build/
 *.env
 *.secret
 commands.sh
+examples.txt
 
 # Miscellaneous
 .DS_Store

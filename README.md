@@ -5,6 +5,18 @@ library with the `LLaMA-3.1` model.
 
 The API takes a message as input and returns whether it qualifies as hate speech along with explanations for the
 classification, as well as it qualifies as fake news or hyperpartisan content.
+---
+## 🔗 Links
+
+- **Frontend**: [Oh! Frontend](https://github.com/palomapiot/oh-front). The frontend provides an intuitive and user-friendly interface for users to interact with the chatbot.
+
+- **Backend**: [Oh! Backend](https://github.com/nulldiego/oh-back). The backend handles core chatbot functionalities, including data processing, data storage, chats logic and API management.
+
+## 🎥 Demo
+
+A demo showcasing the chatbot’s capabilities is available in the `demo` folder of this repository.  
+
+---
 
 ## Features 🌟
 
@@ -14,6 +26,8 @@ classification, as well as it qualifies as fake news or hyperpartisan content.
 - Detects hyperpartisan news based on a defined set of criteria.
 - Provides detailed explanations for each message analyzed.
 - Optimized for inference with 4-bit quantized models on GPU.
+
+---
 
 ## Prerequisites 📋
 
@@ -50,6 +64,8 @@ Replace `your_hugging_face_token` with your Hugging Face API token.
 ### Accessing the API 🌐
 
 Once the application is running, you can access the API at `http://localhost:8000/`.
+
+---
 
 ## API Endpoints 📡
 
@@ -95,6 +111,8 @@ The API provides the following endpoints:
 }
 ```
 
+---
+
 ## Citation 📑
 
 If you use this demo or any part of the code in this repository, please cite the following reference:
@@ -117,14 +135,20 @@ If you use `Llama-3-8B-Distil-MetaHate` model, please cite the following referen
 }
 ```
 
+---
+
 ## Computational Cost ⚡
 
 In our demo, we used the quantized 4-bit model `Llama-3-8B-Instruct` from `unsloth` (in both its base version and distilled). The model processes tokens at 0.4143 tokens per second, requiring 8.1 GB of GPU memory. In production, the model runs well on an NVIDIA L4. Environmental impact: the L4 emits 0.04 kg CO2eq per hour, costing $21.20, for 30h of usage.
+
+---
 
 ## Contributing 🤝
 
 If you want to contribute to this project, feel free to open issues or submit pull requests. All contributions are
 welcome!
+
+---
 
 ## Disclaimer ⚠️
 
@@ -132,9 +156,13 @@ This repository includes content that may contain hate speech, offensive languag
 
 Users are advised to exercise caution and sensitivity when interacting with or interpreting the repository. If you choose to use the datasets or models, it is recommended to handle the content responsibly and in compliance with ethical guidelines and applicable laws.  The project maintainers disclaim any responsibility for the content within the repository and cannot be held liable for how it is used or interpreted by others.
 
+---
+
 ## Acknowledgements 🙏
 
 The authors thank the funding from the Horizon Europe research and innovation programme under the Marie Skłodowska-Curie Grant Agreement No. 101073351. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the European Research Executive Agency (REA). Neither the European Union nor the granting authority can be held responsible for them. The authors also thank the financial support supplied by the Consellería de Cultura, Educación, Formación Profesional e Universidades (accreditation 2019-2022 ED431G/01, ED431B 2022/33) and the European Regional Development Fund, which acknowledges the CITIC Research Center in ICT as a Research Center of the Galician University System and the project PID2022-137061OB-C21 (Ministerio de Ciencia e Innovación supported by the European Regional Development Fund). The authors also thank the funding of project PLEC2021-007662 (MCIN/AEI/10.13039/501100011033, Ministerio de Ciencia e Innovación, Agencia Estatal de Investigación, Plan de Recuperación, Transformación y Resiliencia, Unión Europea-Next Generation EU). The authors thank Diego Sánchez Lamas for their contribution to the development of the back-end part of the application.
+
+---
 
 ## License 📜
 
@@ -144,6 +172,8 @@ Materials, you agree to be bound by the terms and conditions set forth in the Ag
 For full details, please refer to the following:
 
 - [Llama 3.1 Community License Agreement](https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct/blob/main/LICENSE)
+
+---
 
 ## Contact 📬
 

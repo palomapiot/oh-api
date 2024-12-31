@@ -137,7 +137,6 @@ class PromptRequest(BaseModel):
 
 def inference(instruction: str, prompt: str, is_distil=False):
     message = [{"from": "human", "value": instruction + "<Message>" + prompt + "</Message>"}]
-    print('Tokenizing message')
     inputs = tokenizer.apply_chat_template(
         message,
         tokenize=True,
@@ -148,7 +147,6 @@ def inference(instruction: str, prompt: str, is_distil=False):
     #if is_distil:
     #    outputs = distil.generate(input_ids=inputs, max_new_tokens=2048, use_cache=True)
     #else:
-    print('Generating output')
     outputs = model.generate(
         input_ids=inputs,
         max_new_tokens=2048,
@@ -157,9 +155,7 @@ def inference(instruction: str, prompt: str, is_distil=False):
         top_p=0.1,
         top_k=5
     )
-    print('Decoding output')
     result = tokenizer.batch_decode(outputs)
-    print('Repairing JSON')
     decoded_object = json_repair.repair_json(result[0], return_objects=True)
     return decoded_object[-1]
 
@@ -233,13 +229,9 @@ async def generate_text(request: PromptRequest):
         raise HTTPException(status_code=400, detail="Prompt is required")
     try:
         # Run inference for all models concurrently in threads
-        print('Run hate speech inference')
         hs_response = inference(hs_instruction, request.prompt)
-        print('Run hyperparsan inference')
         hyperpartisan_response = inference(hyperpartisan_instruction, request.prompt)
-        print('Run fake news inference')
         fake_news_response = inference(fake_news_instruction, request.prompt)
-        print('Generate user message')
         response = generate_user_messages(hs_response, fake_news_response, hyperpartisan_response)
 
         return {
