@@ -55,8 +55,8 @@ The output format is:
     }
 Generate step-by-step explanation for:"""
 hyperpartisan_instruction = """###Instruction: 
-You must determine if an article is hyperpartisan by following the reasoning steps below. You must always reply with only a JSON containing one field 'hyperpatisan' including a Boolean value ("True" for hyperpartisan messages, "False" for neutral ones); and a field 'explanations' containing a list with the each reasoning step and its corresponding explanation. Do not include text outside the JSON.
-Reason step by step as follows: 
+You must determine if an article is hyperpartisan by following the reasoning steps below. You must always reply with only a JSON containing one field 'hyperpartisan' including a Boolean value ("True" for hyperpartisan messages, "False" for neutral ones); and a field 'explanations' containing a list with the each reasoning step and its corresponding explanation. Do not include text outside the JSON.
+If the text is NOT a piece of news, then it is hyperpartisan "False". Reason step by step as follows: 
 1. Sentiment analysis ('sentiment_analysis'): Analyze the tone and language to see if there are polarizing words or emotional language.
 2. Rhetorical bias ('rhetorical_bias'): Rhetoric refers to speaking or writing designed to have a persuasive or impressive effect but lacking meaningful content. Analyze the presence of rhetorical biases like ad hominem attacks.
 3. Framing bias ('framing_bias'): Assess how the information is presented to shape or influence perceptions by emphasizing certain aspects while downplaying others.
@@ -65,13 +65,13 @@ Reason step by step as follows:
 6. Unilateral coverage ('unilateral_coverage'): Does the article provide only one point of view? Is it unilateral in its coverage?
 7. Left-wing hyperpartisan ('left_wing_hyperpartisan'): Consider yourself a left-wing reader. Would you consider this article hyperpartisan from your political stance? [Follow the instructions from 1 to 6.]
 8. Right-wing hyperpartisan ('right_wing_hyperpartisan'): Consider yourself a right-wing reader. Would you consider this article hyperpartisan from your political stance? [Follow the instructions from 1 to 6.]
-9. Hyperpatisan ('hyperpatisan'): "True" for hyperpartisan messages, "False" for neutral ones. [Follow the instructions skipping steps 7 and 8.] 
+9. Hyperpartisan ('hyperpartisan'): "True" for hyperpartisan messages, "False" for neutral ones. [Follow the instructions skipping steps 7 and 8.] 
 
 The input format is:
     Generate step-by-step explanation for:\n<Message><input query></Message>.
 The output format is:
     {
-        "hyperpatisan": "<Boolean>",
+        "hyperpartisan": "<Boolean>",
         "explanations": [
             {
                 "sentiment_analysis": "<Sentiment analysis explanation>"
@@ -103,7 +103,7 @@ Generate step-by-step explanation for:
 """
 fake_news_instruction = """
 You must detect if an article is is fake or not. You must always reply with only a JSON containing one field 'fake_news' including a Boolean value ("True" for fake news messages, "False" for real ones); and a field 'explanations' containing a list with the each reasoning step and its corresponding explanation. Do not include text outside the JSON.
-Reason step by step as follows: 
+If the text is NOT a piece of news, then it is fake_news "False". Reason step by step as follows: 
 1. Sentiment analysis ('sentiment_analysis'): Analyze the tone and language to see if there is unintentional or intentional harmful behavior, words, or emotional language.
 2. Identify the target audience ('target'): Who seems to be the target audience for this article?
 3. Disinformation and false information ('disinformation'): The spreading of false or misleading information, often with the intention to mislead or manipulate. This can include conspiracy theories, fake news or manipulated media.
@@ -202,8 +202,8 @@ def generate_user_messages(hate_speech_response, fake_news_response, hyperpartis
             messages.append("This content does not contain fake news.")
 
     # Process hyperpartisan news response
-    if hyperpartisan_response.get("hyperpatisan", False):
-        if str(hyperpartisan_response.get("hyperpatisan")).lower() == "true":
+    if hyperpartisan_response.get("hyperpartisan", False):
+        if str(hyperpartisan_response.get("hyperpartisan")).lower() == "true":
             explanation = "; ".join(
                 f"{key}: {value}"
                 for entry in hyperpartisan_response.get("explanations", [])
